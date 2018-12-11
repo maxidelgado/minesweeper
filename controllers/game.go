@@ -2,7 +2,18 @@ package controllers
 
 import (
 	"github.com/astaxie/beego"
+	"github.com/minesweeper/services"
+	"github.com/minesweeper/models/interfaces"
+	"github.com/minesweeper/models/domain"
+	"encoding/json"
+	"github.com/minesweeper/models/commands"
 )
+
+var service interfaces.IGameService
+
+func init() {
+	service = services.GetGameService()
+}
 
 type GamesController struct {
 	beego.Controller
@@ -18,6 +29,7 @@ type GamesController struct {
 // @Accept json
 // @router /:email [get]
 func (c *GamesController) Get() {
+
 }
 
 // @Title New game
@@ -31,6 +43,20 @@ func (c *GamesController) Get() {
 // @Accept json
 // @router / [post]
 func (c *GamesController) Post() {
+	var body commands.CreateGameCommand
+
+	json.Unmarshal(c.Ctx.Input.RequestBody, &body)
+
+	game := domain.Game{
+		Email: body.Email,
+		Board: domain.Board{
+			Rows: body.Size,
+			Cols: body.Size,
+		},
+	}
+	c.Data["json"], _ = service.StartGame(game)
+
+	c.ServeJSON()
 }
 
 // @Title Update game
