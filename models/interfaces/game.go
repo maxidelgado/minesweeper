@@ -3,6 +3,6 @@ package interfaces
 import "github.com/minesweeper/models/domain"
 
 type IGameService interface {
-	StartGame(game domain.Game) error
+	StartGame(game domain.Game) (domain.Game, error)
 	OpenCell(cell domain.Cell) error
 }
