@@ -6,6 +6,11 @@ import (
 )
 
 func main() {
+	if beego.BConfig.RunMode == "dev" {
+		beego.BConfig.WebConfig.DirectoryIndex = true
+		beego.BConfig.WebConfig.StaticDir["/api/v1/swagger"] = "swagger"
+	}
+
 	beego.Run()
 }
 

@@ -5,6 +5,17 @@ import (
 	"github.com/astaxie/beego"
 )
 
+// @APIVersion 1.0.0
+// @Title Minesweeper API
+// @Description Web Minesweeper challenge for Fukuroo!
+// @Contact maxi.delga2@gmail.com
 func init() {
-    beego.Router("/", &controllers.MainController{})
+	ns := beego.NewNamespace("/api/v1",
+		beego.NSNamespace("/games",
+			beego.NSInclude(
+				&controllers.GamesController{},
+			)),
+	)
+
+	beego.AddNamespace(ns)
 }
