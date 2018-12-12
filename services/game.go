@@ -33,8 +33,13 @@ func (service *GameService) StartGame(game domain.Game) (domain.Game, error) {
 }
 
 func (service *GameService) OpenCell(gameId int, email string, cell domain.Cell) (domain.Game, error) {
+
 	for i, game := range service.Store[email] {
 		if game.Id == gameId {
+			if cell.HasMine {
+				game.Over = true
+				return game, nil
+			}
 			game.Board.OpenCell(cell)
 			service.Store[email][i] = game
 			return service.Store[email][i], nil

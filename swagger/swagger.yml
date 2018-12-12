@@ -1,0 +1,221 @@
+swagger: "2.0"
+info:
+  title: Minesweeper API
+  description: Web Minesweeper challenge for Fukuroo!
+  version: 1.0.0
+  contact:
+    email: maxi.delga2@gmail.com
+basePath: /api/v1
+paths:
+  /games/:
+    get:
+      tags:
+      - games
+      summary: getGames
+      description: A GET request is used to retrieve a game using an email
+      operationId: GamesController.Get game by email
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: path
+        name: email
+        description: username@email.com
+        type: string
+        default: "true"
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.Game'
+        "400":
+          description: Bad request
+        "404":
+          description: Not found
+    put:
+      tags:
+      - games
+      summary: putGames
+      description: A PUT request is used to save the game
+      operationId: GamesController.Update game
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: game
+        description: '-'
+        type: string
+        default: "true"
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.Game'
+        "400":
+          description: Bad request
+        "404":
+          description: Not found
+    post:
+      tags:
+      - games
+      summary: postGames
+      description: A POST request is used to create a new game using an email
+      operationId: GamesController.New game
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: email
+        description: username@email.com
+        type: string
+        default: "true"
+      - in: body
+        name: size
+        description: "10"
+        type: integer
+        format: int64
+        default: "true"
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.Game'
+        "400":
+          description: Bad request
+        "404":
+          description: Not found
+  /games/flag:
+    patch:
+      tags:
+      - games
+      summary: patchGame
+      description: A PATCH request is used to flag the squares
+      operationId: GamesController.Flag cell
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: gameId
+        description: "1"
+        type: string
+        default: "true"
+      - in: body
+        name: email
+        description: "1"
+        type: string
+        default: "true"
+      - in: body
+        name: cell
+        description: "1"
+        type: string
+        default: "true"
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.Game'
+        "400":
+          description: Bad request
+        "404":
+          description: Not found
+  /games/open:
+    patch:
+      tags:
+      - games
+      summary: patchGame
+      description: A PATCH request is used to open the squares
+      operationId: GamesController.Open Cell
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: gameId
+        description: "1"
+        type: string
+        default: "true"
+      - in: body
+        name: email
+        description: "1"
+        type: string
+        default: "true"
+      - in: body
+        name: cell
+        description: "1"
+        type: string
+        default: "true"
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.Game'
+        "400":
+          description: Bad request
+        "404":
+          description: Not found
+definitions:
+  domain.Board:
+    title: Board
+    type: object
+    properties:
+      cells:
+        type: array
+        items:
+          $ref: '#/definitions/domain.Rows'
+      cols:
+        type: integer
+        format: int64
+      rows:
+        type: integer
+        format: int64
+  domain.Cell:
+    title: Cell
+    type: object
+    properties:
+      hasFlag:
+        type: boolean
+      hasMine:
+        type: boolean
+      revealed:
+        type: boolean
+      value:
+        type: integer
+        format: int64
+      xAxis:
+        type: integer
+        format: int64
+      yAxis:
+        type: integer
+        format: int64
+  domain.Game:
+    title: Game
+    type: object
+    properties:
+      board:
+        $ref: '#/definitions/domain.Board'
+      elapsedTime:
+        type: integer
+        format: int64
+      email:
+        type: string
+      finishedAt:
+        type: string
+        format: datetime
+      id:
+        type: integer
+        format: int64
+      over:
+        type: boolean
+  domain.Rows:
+    title: Rows
+    type: array
+    items:
+      $ref: '#/definitions/domain.Cell'

@@ -26,7 +26,6 @@ type Board struct {
 	Cells []Rows `json:"cells"`
 }
 
-
 func (b *Board) Setup() {
 	rows := make(Rows, b.Rows*b.Cols)
 
@@ -40,10 +39,12 @@ func (b *Board) OpenCell(cell Cell) {
 	if cell.Value == 0 {
 		adjacentCells := b.getAdjacentCells(cell)
 		for _, c := range adjacentCells {
-			if c.Value == 0 && !c.Revealed {
+			if !c.HasMine && !c.Revealed {
 				b.OpenCell(c)
 			}
 		}
+	} else if cell.HasMine {
+
 	}
 }
 
@@ -104,7 +105,7 @@ func (b *Board) setValues() {
 			adjacentCells := b.getAdjacentCells(b.Cells[i][j])
 
 			for _, c := range adjacentCells {
-				if c.HasMine {
+				if c.HasMine && b.Cells[i][j].Value != -1 {
 					b.Cells[i][j].Value++
 				}
 			}
