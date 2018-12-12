@@ -1,0 +1,23 @@
+<div class="card">
+  <div class="card-header">
+    Current game
+  </div>
+  <div class="card-block">
+    <div class="card-title" *ngIf="currentGame.over">
+      <strong class="is-danger">¡Game Over!</strong>
+    </div>
+    <div class="card-text">
+      <div class="btn-group btn-primary clr-row" *ngFor="let row of currentGame.board.cells">
+        <app-cell *ngFor="let cell of row"
+                  [cell]="cell"
+                  (openedCell)="onClickedCell($event)"
+                  (flaggedCell)="onFlaggedCell($event)">
+        </app-cell>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer text-right">
+    <button class="btn btn-link" [routerLink]="['../..']" routerLinkActive="active">Back</button>
+  </div>
+</div>

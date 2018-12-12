@@ -1,0 +1,5 @@
+<button class="btn {{isRevealed()}}" (click)="onClick()" (contextmenu)="onRightClick($event)" oncontextmenu="return false;">
+  <i class="fas fa-bomb" *ngIf="cell.hasMine && cell.revealed"></i>
+  <i class="fas fa-flag" *ngIf="cell.hasFlag"></i>
+  <span *ngIf="!cell.hasMine && cell.revealed && cell.value > 0">{{cell.value}}</span>
+</button>

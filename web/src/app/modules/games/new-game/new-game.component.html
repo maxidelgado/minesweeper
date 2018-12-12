@@ -1,0 +1,30 @@
+<div class="card">
+  <div class="card-header">
+    New game
+  </div>
+  <div class="card-block">
+    <div class="card-text">
+      <form clrForm [formGroup]="form" (submit)="onSubmit()">
+        <clr-input-container>
+          <label>Email</label>
+          <input clrInput type="text" formControlName="email"/>
+          <clr-control-error>This field is required</clr-control-error>
+        </clr-input-container>
+        <clr-select-container>
+          <label>Number of rows</label>
+          <select clrSelect name="options" formControlName="cols">
+            <option [value]="5">5x5</option>
+            <option [value]="10">10x10</option>
+            <option [value]="20">20x20</option>
+          </select>
+        </clr-select-container>
+        <div class="clr-row">
+          <div class="clr-col-2"></div>
+          <div class="clr-col-2 margin-top-2">
+            <button class="btn btn-success" type="submit" [disabled]="!form.valid">Create</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
